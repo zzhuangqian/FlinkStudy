@@ -5,7 +5,6 @@ import org.apache.flink.streaming.api.functions.source.{RichParallelSourceFuncti
 import java.util.Calendar
 import scala.util.Random
 
-<<<<<<< HEAD
 // 泛型是sensorReading 表明产生的流中的事件类型是SensorReading
 class SensorSource extends RichParallelSourceFunction[SensorReading] {
   // 表示数据源是否正常运行
@@ -19,42 +18,17 @@ class SensorSource extends RichParallelSourceFunction[SensorReading] {
     )
     while (runing) {
       curFtemp = curFtemp.map(
-        t => (t._1, t._2 + (rand.nextGaussian() * 0.5))
-=======
-class SensorSource extends RichParallelSourceFunction[SensorReading]{
-  // 表示数据源是否正常运行
-  val runing: Boolean = true
-
-  override def run(sourceContext: SourceFunction.SourceContext[SensorReading]): Unit = {
-    val rand = new Random
-    var curFtemp = (1 to 10).map(
-      i=>('sensor_'+i,(rand.nextGaussian() *20))
-    )
-    while(runing){
-      curFtemp = curFtemp.map(
-        t=> (t._1,t._2+(rand.nextGaussian() *0.5))
->>>>>>> 71e6452b3beb5ab803cad37dfc4116e491a5bd42
-      )
+        t => (t._1, t._2 + (rand.nextGaussian() * 0.5)))
 
       val curTime = Calendar.getInstance.getTimeInMillis
 
-<<<<<<< HEAD
       curFtemp.foreach(t => ctx.collect(SensorReading(t._1, curTime, t._2)))
 
       Thread.sleep(100)
-=======
-      curFtemp.foreach(t=> ctx.collection())
->>>>>>> 71e6452b3beb5ab803cad37dfc4116e491a5bd42
-
     }
 
   }
-
-<<<<<<< HEAD
-//  定义当关闭传感器时，取消数据源
-  override def cancel(): Unit = runing = false
-
-=======
->>>>>>> 71e6452b3beb5ab803cad37dfc4116e491a5bd42
+  //  定义当关闭传感器时，取消数据源
+  override def cancel (): Unit = runing = false
 
 }
