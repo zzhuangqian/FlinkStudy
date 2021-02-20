@@ -13,8 +13,7 @@ object RedirectLateEvent {
     val env = StreamExecutionEnvironment.getExecutionEnvironment
     env.setParallelism(1)
     env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime)
-    val steam = env.socketTextStream("localhost", 9999,
-      "]n")
+    val steam = env.socketTextStream("localhost", 9999, "/n")
       .map(line => {
         val arr = line.split(" ")
         (arr(0), arr(1).toLong * 1000L)

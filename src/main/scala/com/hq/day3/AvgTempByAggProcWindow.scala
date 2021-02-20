@@ -50,12 +50,12 @@ object AvgTempByAggProcWindow {
         (acc._1,acc._2+acc1._2,acc._3+acc1._3)
       }
     }
-    class WindowResult extends ProcessWindowFunction[(String,Double),AvgInfo,TimeWindow]{
-      override def process(key: TimeWindow, context: Context, elements: Iterable[(String, Double)], out: Collector[AvgInfo]): Unit = {
-        out.collect(AvgInfo(key,elements.head._2,context.window.getStart,context.window.getEnd))
-      }
-      override onTime
+    class WindowResult extends ProcessWindowFunction[(String,Double),AvgInfo,String,TimeWindow]{
 
+      override def process(key: String, context: Context, elements: Iterable[(String, Double)], out: Collector[AvgInfo]): Unit = {
+        out.collect(AvgInfo(key,elements.head._2,context.window.getStart,context.window.getEnd))
+
+      }
     }
   }
 

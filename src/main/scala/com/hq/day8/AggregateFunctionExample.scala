@@ -4,7 +4,6 @@ import com.hq.day2.{SensorSource}
 import org.apache.flink.streaming.api.scala._
 import org.apache.flink.table.api._
 import org.apache.flink.table.api.scala._
-import org.apache.flink.table.functions.AggregateFunction
 
 object AggregateFunctionExample {
 
@@ -21,14 +20,14 @@ object AggregateFunctionExample {
       .inStreamingMode()
       .build()
     val tEnv = StreamTableEnvironment.create(env,settings)
-    val avgTemp = new AvgTemp()
+    var avgTemp = new AvgTemp()
 
     val table = tEnv.fromDataStream(stream,'id,'timestamp as 'ts,'temperature as 'temp)
 
     table
       .groupBy('id)
-      .aggregate(avgTemp('temp') as 'avgTemp)
-    .
+//      .aggregate('avgTemp("temp") as 'avgTemp)
+
 
 
     env.execute()
